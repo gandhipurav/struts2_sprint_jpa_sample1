@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+	<constant name="struts.devMode" value="fasle" />
+	<constant name="struts.objectFactory.spring.autoWire" value="name" />
+	<constant name="struts.custom.i18n.resources" value="com.Item" />
+	<!-- To Remove The Action Suffix Extension In Struts -->
+	<constant name="struts.action.extension" value="" />
+
+	<package name="default" namespace="/" extends="struts-default">
+		<result-types>
+			<result-type name="tiles"
+				class="org.apache.struts2.views.tiles.TilesResult" />
+		</result-types>
+		<global-results>
+			<result name="inValid" type="redirect">/login</result>
+		</global-results>
+		<action name="login">
+			<result>/login.jsp</result>
+		</action>
+		<action name="login.jsp">
+			<result type="redirect">/login</result>
+		</action>
+		<action name="home" class="loginAction">
+			<result name="failure" type="redirect">/login</result>
+			<result name="success" type="tiles">page.welcome</result>
+		</action>
+		<action name="addItem" class="saveItemAction" method="add">
+			<result name="success" type="tiles">page.itemForm</result>
+		</action>
+		<action name="saveItem" class="saveItemAction" method="save">
+			<result name="input" type="tiles">page.itemForm</result>
+			<result name="failure" type="tiles">page.itemForm</result>
+			<result name="success" type="redirect">/viewItem</result>
+		</action>
+		<action name="editItem" class="saveItemAction" method="edit">
+			<result name="failure" type="tiles">page.viewItem</result>
+			<result name="success" type="tiles">page.itemForm</result>
+		</action>
+		<action name="viewItem" class="saveItemAction" method="view">
+			<result name="failure" type="tiles">/welcome.jsp</result>
+			<result name="success" type="tiles">page.viewItem</result>
+		</action>
+		<action name="deleteItem" class="saveItemAction" method="delete">
+			<result name="success" type="tiles">page.viewItem</result>
+			<result name="failure" type="tiles">page.viewItem</result>
+		</action>
+	</package>
+</struts>

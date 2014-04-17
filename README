@@ -1,0 +1,9 @@
+This is the crud application which uses struts2,spring sec and hibernate
+
+Steps to use
+1.Unzip this folder
+2.Create the database
+3.Set the database.properties file
+4.In terminal go to this folder and enter mvn clean install
+5.And run in browser
+

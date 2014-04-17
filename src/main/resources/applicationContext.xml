@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+	<!-- Database Configuration -->
+	<import resource="config/database/spring/DataSource.xml" />
+	<import resource="config/database/spring/HibernateSessionFactory.xml" />
+
+	<!-- Define Beans -->
+	<bean id="item" class="com.aspire.model.Item" />
+	<bean id="color" class="com.aspire.model.Color" />
+	<bean id="user" class="com.aspire.model.User" />
+
+	<!-- Define Actions -->
+	<bean id="saveItemAction" class="com.aspire.web.action.SaveItemAction" scope="prototype">
+		<property name="itemBo" ref="itemBo" />
+	</bean>
+	
+	<bean id="loginAction" class="com.aspire.web.action.LoginAction" scope="prototype">		
+	</bean>
+
+	<!-- Define Business and Data Access Objects -->
+	<bean id="itemBo" class="com.aspire.bo.impl.ItemBoImpl"
+		autowire-candidate="false">
+	</bean>
+	<bean id="itemDao" class="com.aspire.dao.impl.GenericDaoHibernateImpl">
+		<constructor-arg>
+			<value>com.aspire.model.Item</value>
+		</constructor-arg>
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="userDao" class="com.aspire.dao.impl.GenericDaoHibernateImpl">
+		<constructor-arg>
+			<value>com.aspire.model.User</value>
+		</constructor-arg>
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+</beans>
